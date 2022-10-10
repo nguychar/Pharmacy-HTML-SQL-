@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="http://flip2.engr.oregonstate.edu:17350/static/style.css" />
+    <title>{% block title %}{% endblock %}No Refills Pharmacy</title>
+    {% endblock %}
+</head>
+
+
+<body>
+    <nav class="navbar">
+    <h1><a class="navbar-brand">No Refills Pharmacy</a></h1>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/index">Inventory Home Page</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/prescriptions">Prescriptions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/pharmacists">Pharmacists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/invoices">Invoices</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/distributors">Distributors</a>
+        </li>
+        </ul>
+    </div>
+    </nav>
+	<h1>Edit Distributor</h1>
+    <div>
+    <table border="1" cellpadding="5"> 
+        <!-- Access data tuple passed from app.py -->
+        {% if data %}
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Distributor Name</th>
+                    <th>Total Expenses ($)</th>
+                </tr>
+            <tbody>
+                <!-- Now, iterate through every item in data -->
+                {% for item in data %}
+                <tr>
+                    <!-- Then iterate through every key in the current item dictionary -->
+                    {% for key in item.keys() %}
+                    
+                    <!-- Create a <td> element with the value of that key in it -->
+                    <td>{{item[key]}}</td> {% endfor %} 
+                </tr> 
+                {% endfor %} 
+        {% endif %} 
+        </table>
+        <br>
+        <div id="edit">
+            <form id="editDistributor" action="/edit_distributor/{{data[0].distributor_number}}" method="post">
+                <legend><strong>Edit Distributor</strong></legend>
+                <fieldset>
+                    <label for="name">Distributor Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Distributor" required>
+                </fieldset>
+                <input type="submit" value="Edit Distributor" name="Edit_Distributor" class="btn btn-primary" style="margin:.5rem;">
+                <a href="/distributors"><input class="btn" type="button" value="Cancel"></a>
+            </form>
+</html>

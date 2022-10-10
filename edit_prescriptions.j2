@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="http://flip2.engr.oregonstate.edu:17350/static/style.css" />
+    <title>{% block title %}{% endblock %}No Refills Pharmacy</title>
+    {% endblock %}
+</head>
+
+
+<body>
+    <nav class="navbar">
+    <h1><a class="navbar-brand">No Refills Pharmacy</a></h1>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/index">Inventory Home Page</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/prescriptions">Prescriptions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/pharmacists">Pharmacists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/invoices">Invoices</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/distributors">Distributors</a>
+        </li>
+        </ul>
+    </div>
+    </nav>
+
+    <h2>Current Prescription Information</h2>
+    <p>
+    <dl>
+    <dt>RX Number</dt>
+    <dd>{{rx_data[0]['rx_number']}}</dd>
+    <dt>Date: </dt>
+    <dd>{{rx_data[0]['rx_date']}} </dd>
+    <dt>NDC</dt>
+    <dd>{{rx_data[0]['drug_ndc']}}</dd>
+    <dt>RPH</dt>
+    <dd>{{rph[0]['RPH']}}</dd>
+    <dt>Dispensed Quantity</dt>
+    <dd>{{rx_data[0]['units_dispensed']}}</dd>
+    <dt>Price</dt>
+    <dd>${{rx_data[0]['rx_price']}} </dd>
+    </dl>
+    </p>
+    <hr>
+
+    <div id="edit">
+        <form method="POST" id="edit_rx">
+            <fieldset class="fields">
+                <label> Date </label> <input type="date" name="date" required>
+                <label> RPH </label> <select name="rph_id">
+                    <option value="">&nbsp;</option>
+                    {% for rph in rph_data %}
+                        <option value={{rph.rph_id}}> {{rph.RPH}}</option>
+                    {% endfor %}
+                        </select>
+                <label> Quantity</label> <input type="number" name="rx_quantity"style="width: 40px;" required>
+                <label> Price ($)</label> <input type="number" name = "price" min="0.00" step="0.01" style="width: 75px;" required>
+                <input type="hidden" value="{{rx_data[0]['units_dispensed']}}" name="old_dispensed">
+                <input class="btn" type="submit" name="edit_rx" value="Edit RX">
+            </fieldset>
+        </form>
+    </div><!--edit-->
+
+
+    <div id="footer">
+        <hr>
+    </div>
+
+</body>
+</html>

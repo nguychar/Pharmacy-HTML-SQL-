@@ -1,0 +1,66 @@
+/* CSS Document */
+
+.navbar-brand {
+  color: #247941 !important;
+  font-weight: bold;
+}
+.nav-link {
+  color: #3573d7 !important;
+}
+
+/* Body*/
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color:#ffffff;  
+  padding: 1em;
+}
+
+h1 {
+  /* color:#49c6e5ff; */
+  color: #525c66;
+
+}
+
+div {
+  padding: .5rem;
+  margin-right: 0;
+  margin-left: 0;
+  border-width: .2rem;
+}
+
+caption{
+  text-align: left;
+  font-weight: bolder;
+  color:#247941;
+  font-size:larger;
+}
+
+th {
+  text-align: left !important;
+  color:rgb(78, 103, 78);
+}
+td {
+  min-width: 100px;
+  text-align: left;
+  border: 1px solid rgb(83, 82, 82);
+  border-collapse: collapse;
+}
+ul
+{ 
+overflow-x:hidden;
+white-space:nowrap; 
+height: 2em;
+width: 100%;
+} 
+
+li
+{ 
+display:inline; 
+border: 1px solid rgb(66, 65, 65);
+}  
+
+.sr-only
+{
+  display:none;
+  visibility: hidden;
+}

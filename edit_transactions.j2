@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="http://flip2.engr.oregonstate.edu:17350/static/style.css" />
+    <title>{% block title %}{% endblock %}No Refills Pharmacy</title>
+    {% endblock %}
+</head>
+
+
+<body>
+    <nav class="navbar">
+    <h1><a class="navbar-brand">No Refills Pharmacy</a></h1>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/index">Inventory Home Page</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/prescriptions">Prescriptions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/pharmacists">Pharmacists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/invoices">Invoices</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/distributors">Distributors</a>
+        </li>
+        </ul>
+    </div>
+    </nav>
+	<h1>Edit Transaction</h1>
+    <div>
+    <table border="1" cellpadding="5"> 
+        <!-- Access data tuple passed from app.py -->
+        {% if data %}
+            <thead>
+                <tr>
+                    <th>Drug NDC</th>
+                    <th>PO Number</th>
+                    <th>Quantity</th>
+                    <th>Order Cost ($)</th>
+                </tr>
+            <tbody>
+                <!-- Now, iterate through every item in data -->
+                {% for item in data %}
+                <tr>
+                    <!-- Then iterate through every key in the current item dictionary -->
+                    {% for key in item.keys() %}
+                    
+                    <!-- Create a <td> element with the value of that key in it -->
+                    <td>{{item[key]}}</td> {% endfor %} 
+                </tr> 
+                {% endfor %} 
+        {% endif %} 
+        </table>
+        <br>
+        <div id="edit">
+            <form id="editTransaction" action="/transactions/edit_transaction/{{data[0].po_number}}/{{data[0].drug_ndc}}" method="post">
+                <legend><strong>Edit Transaction</strong></legend>
+                <fieldset>
+                <label>Quantity:</label>
+                <input type="number" name="quantity">
+                <label for="cost">Order Cost ($):</label>
+                <input type="number" name="cost">
+                <input type="hidden" name="po_number" value={{data[0].po_number}}>
+                <input type="hidden" name="old_cost" value={{data[0].drug_subtotal}}>
+                <input type="hidden" name="old_quantity" value={{data[0].units_ordered}}>
+                </fieldset>
+                <input type="submit" value="Edit Transaction" name="Edit_Transaction" class="btn btn-primary" style="margin:.5rem;">
+                <a href="/invoices"><input class="btn" type="button" value="Cancel"></a>
+            </form>
+</html>

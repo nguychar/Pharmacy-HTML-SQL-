@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="http://flip2.engr.oregonstate.edu:17350/static/style.css" />
+    <title>{% block title %}{% endblock %}No Refills Pharmacy</title>
+    {% endblock %}
+</head>
+
+
+<body>
+    <nav class="navbar">
+    <h1><a class="navbar-brand">No Refills Pharmacy</a></h1>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/index">Inventory Home Page</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/prescriptions">Prescriptions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/pharmacists">Pharmacists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/invoices">Invoices</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/distributors">Distributors</a>
+        </li>
+        </ul>
+    </div>
+    </nav>
+      <div id="edit">
+		<form method="post">
+			<legend><strong>Edit Pharmacist</strong></legend>
+			<fieldset>
+				<input type="hidden" value="{{data[0].rph_id}}" id="rphid" name="rphid" required>
+
+				<label>First Name:</label> <input type="text" id="fname" name="fname" placeholder="{{data[0].rph_first_name}}" required>
+				<label>Last Name:</label> <input type="text" id="lname" name="lname" placeholder="{{data[0].rph_last_name}}" required>
+
+                <input type="submit" value="Edit Pharmacist" name="edit_rph" class="btn btn-primary" style="margin:.5rem;">
+                <a href='/pharmacists'><input class="btn" type="button" value="Cancel" style="margin:.5rem;"> </a>
+        </form>
+	</div><!--edit-->
+
+
+    <div id="footer">
+        <hr>
+    </div>
+
+</body>
+</html>

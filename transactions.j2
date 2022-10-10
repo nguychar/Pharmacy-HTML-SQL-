@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="http://flip2.engr.oregonstate.edu:17350/static/style.css" />
+    <title>{% block title %}{% endblock %}No Refills Pharmacy</title>
+    {% endblock %}
+</head>
+
+
+<body>
+    <nav class="navbar">
+    <h1><a class="navbar-brand">No Refills Pharmacy</a></h1>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/index">Inventory Home Page</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/prescriptions">Prescriptions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/pharmacists">Pharmacists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/invoices">Invoices</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/distributors">Distributors</a>
+        </li>
+        </ul>
+    </div>
+    </nav>
+	<h1>Transactions</h1>
+    <h2>Current Invoice Information</h2>
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>PO Number</th>
+                <th>Distributor</th>
+                <th>Order Date</th>
+                <th>Order Cost ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{invoice_data[0]['po_number']}}</td>
+                <td>{{distributor_data[0]['distributor_name']}}</td>
+                <td>{{invoice_data[0]['order_date']}}</td>
+                <td>{{invoice_data[0]['order_cost']}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Current Invoice Transactions</h2>
+    <table border="1" cellpadding="5">
+        <!-- Access data tuple passed from app.py --> 
+        {% if data %}
+            <thead>
+                <tr>
+                    <th>Drug NDC</th>
+                    <th>PO Number</th>
+                    <th>Quantity</th>
+                    <th>Order Cost ($)</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            <tbody>
+                <!-- Now, iterate through every item in data -->{% for item in data %}
+                    <tr>
+                        <!-- Then iterate through every key in the current item dictionary -->
+                        {% for key in item.keys() %}
+
+                        <!-- Create a <td> element with the value of that key in it -->
+                        <td> {{item[key]}} </td> 
+                        {% endfor %}
+
+                        <!-- Create our edit/delete buttons -->
+                        <td><a href="edit_transaction/{{invoice_data[0]['po_number']}}/{{item.drug_ndc}}" class="btn btn-default">Edit</a></td>
+                        <td><a href="delete_transaction/{{invoice_data[0]['po_number']}}/{{item.drug_ndc}}" class="btn btn-default">Delete</a></td>
+
+                    </tr> 
+                    {% endfor %} 
+            {% endif %} 
+    </table>   
+	<br>
+    <form id="insertTransaction" action="/transactions/{{invoice_data[0]['po_number']}}" method="post">
+        <legend><strong>Add Transaction</strong></legend>
+        <fieldset>
+            <label>Drug NDC:</label>
+            <select name="drug_ndc">
+                <option value="0">&nbsp;</option>
+                {% for drug in drug_data %}
+                    <option value={{drug.DRUG}}> {{drug.DRUG}}</option>
+                {% endfor %}
+                </select>
+            <label>Quantity:</label>
+            <input type="number" name="quantity">
+            <label for="cost">Order Cost ($):</label>
+            <input type="number" name="cost">
+            <input type="hidden" name="po" value="{{invoice_data[0]['po_number']}}">
+        </fieldset>
+        <input type="submit" value="Add Transaction" name="Add_Transaction" class="btn btn-primary" style="margin:.5rem;">
+    </form>
+</body>
+</html>
